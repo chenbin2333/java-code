@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 为了测试简单，我们先不用约束文件 -->
+<!-- <contacts xmlns="http://itsource.cn"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema-instance"
+	xs:schemaLocation="http://itsource.cn contactsSchema.xsd"> -->
+<contacts> 
+  <linkman id="2334"> 
+    <name>gg</name>  
+    <email>gg@itsource.cn</email>  
+    <address>成都</address>  
+    <group>源代码教育</group> 
+  </linkman>  
+  <linkman id="45"> 
+    <name>mm</name>  
+    <email>lanyotech@qq.com</email>  
+    <address>阿斯顿发送到</address>  
+    <group>源代码教育</group> 
+  </linkman>  
+  <linkman id="69"> 
+    <name>波多宇航</name>  
+    <email>菊花残集团@qq.com</email>  
+    <address>Tokyo某挺热的地方</address>  
+    <group>菊花残</group> 
+  </linkman> 
+</contacts>

@@ -1,0 +1,126 @@
+day017-List和Set 笔记
+
+集合框架：【集合是数据结构】
+1. 集合常用方法【掌握】
+	Iterable（迭代器接口，实现了该接口可以使用foreach,还可以获取集合对象的迭代器对象，通过迭代器遍历集合） 
+		|
+		|--- 方法iterator() =======> Iterator
+		|					  			|	
+		|	方法listIterator()获取	ListIterator 【双向迭代器】
+		|
+  	Collection(所有集合的根接口)  【每次只能存放一个元素】
+  		|
+  		|----- List(接口)表示有序（存入和取出）可重复集合，可以保存null元素 
+  		|		|
+  		|		|---ArrayList(实现类) 基于数组，查改快  
+  		|		|
+  		|		|---LinkedList(实现类)基于变量，双向链表，增删插快 
+  		|		|
+  		|		|	因为LinkedList中有多个接口的实现方法，所以，同样一个功能可以有多个方法实现，
+  		|		|	但是，尽量不要交叉使用（使用同一个接口中的方法），因为交叉使用就会导致
+ 		|		|	既不能完全具其中有一个接口的完整特性
+ 		|		|	
+  		|		|---Vector(就是一个线程安全的ArrayList) 
+  		|
+  		|
+  		|----- Set(接口)表示无序（存入和取出）不可重复集合，可以保存null元素
+  		|		|
+  		|		|---- HashSet(实现类)：基于HashMap，HashMap基于hashCode()计算，是一个非线程安全。
+ 		|		|		|	HashMap底层是: 键值对的数组 + 单向链表 + 红黑树(1.8)
+  		|		|		|	判断重复的机制：
+  		|		|		|		1. 先判断元素的hashCode值
+  		|		|		|		2. 在hashCode相等的情况下，继续判断equals比较，如果都相等认为是同一个元素
+  		|		|		|
+  		|		|		|----LinkedHashSet(是一个有序的HashSet，在HashSet基础上维护了一个链表) 
+  		|		|
+  		|		|---- TreeSet(实现类)：基于TreeMap，TreeMap底层基于红黑树（特殊的二叉树，左边叉值小，右边叉值大，有自平衡机制）
+  		|				1. 自然排序：元素类型必须实现了Comparable接口，且必须重写compareTo（）方法
+		|					返回值  正数：升序
+		|				        返回值  负数：降序
+		|					返回值0：相同的元素,就不会添加了
+		|					
+		|				2. 定制排序：
+  		|					在创建TreeSet对象的时候，传入一个Comparator接口的实现类，该实现类必须重写compare方法
+  		|					 返回值  正数：升序
+		|				         返回值  负数：降序
+		|					 返回值 0：相同的元素
+  		|				当自然排序和定制排序同时使用，定制排序优先级更高
+  		|				一般情况下，默认排序用自然排序，特殊排序用定制排序
+  		|
+  		|-----Queue队列 (接口)
+  				|---Deque双端队列
+  			 	|---Stack栈（先进后出 FirstInLastOut）
+  	
+2. 集合使用场景：【重点】
+ 		如果是需要可以存放重复的元素，用List接口下的实现类
+	 		ArrayList:如果是查改多，用ArrayList
+	 		LinkedList：如果是增删插多，用LinkedList
+	 		Vector：如果是有线程安全要求用Vector
+ 		
+ 		如果是不能存放重复的元素，用Set接口下的实现类
+	 		HashSet：如果没有任何排序要求，用HashSet，因为效率高
+	 		TreeSet: 如果有排序要求用TreeSet，
+	 			如果是自然排序，需要元素实现Comparable接口，重写compareTo方法
+	 			如果是定制排序，需要创建TreeSet对象的时候，传入一个Comparetor接口实现类对象，、
+	 				重写compare方法
+	 			一般是默认排序用自然排序，特殊排序用定制排序
+	 			
+	 		LinkedHashSet：如果需要元素不重复，并且，有存入和取出顺序要求用LinkedHashSet
+ 
+ 		
+3. 集合遍历方式：【掌握】
+ 		集合遍历方式：		只有List才有双向迭代器
+  
+ 		1. foreach()因为ArrayList间接实现了Iterable接口
+ 		2. 迭代器：一个集合对象可以获取多个迭代器对象（多次调用方法）,指针都是在初始位置（第一个元素前面）
+ 			Iterator<E> iterator()  【单向迭代器】
+ 				1. boolean hasNext() 如果迭代具有更多元素，则返回 true 。  
+				2. Object next() 返回迭代中的下一个元素。  
+				3. default void remove() 从底层集合中删除此迭代器返回的最后一个元素（可选操作）。 
+			
+			ListIterator<E> listIterator() 【双向迭代器】
+				void add(E e) 
+					将指定的元素插入列表（可选操作）。  
+				boolean hasNext() 
+					返回 true如果遍历正向列表，列表迭代器有多个元素。  
+				boolean hasPrevious() 
+					返回 true如果遍历反向列表，列表迭代器有多个元素。  
+				E next() 
+					返回列表中的下一个元素，并且前进光标位置。  
+				int nextIndex() 
+					返回随后调用 next()返回的元素的索引。  
+				E previous() 
+					返回列表中的上一个元素，并向后移动光标位置。  
+				int previousIndex() 
+					返回由后续调用 previous()返回的元素的索引。  
+				void remove() 
+					从列表中删除由 next()或 previous()返回的最后一个元素（可选操作）。  
+				void set(E e) 
+					用 指定的元素替换由 next()或 previous()返回的最后一个元素（可选操作）。  
+
+ 		3. 遍历集合方式3：通过普通for循环，利用集合size()方法和get(int index)	（不常用）
+ 
+  		4. 注意：在使用迭代器遍历集合的时候，不能使用集合自己的方法（增删改）操作集合对象
+ 
+4. Collections工具类常用方法【掌握】
+	Collections工具类（所有的方法都是static修饰的）主要用来操作集合
+	// 1.static boolean addAll(Collection c, Object... elements)将所有指定的元素elements添加到指定的集合c中。
+	// 2.static void fill(List list, Object obj)用指定的元素obj代替指定集合list中的所有元素。(批量初始化)
+	// 3.static Object max(Collection coll)根据自然顺序返回给定集合coll的最大元素。（注意：元素必须是同一种类型）
+	// 4.static Object max(Collection coll, Comparator comp)据定制排序comp，返回给定集合coll中的最大元素。（注意：元素必须是同一种类型）
+	// 5.static Object min(Collection coll)根据自然顺序返回给定集合coll的最小元素。（注意：元素必须是同一种类型）
+	// 6.static Object min(Collection coll, Comparator comp)据定制排序comp，返回给定集合coll中的最小元素。（注意：元素必须是同一种类型）
+	// 7.static void reverse(List list)反转指定集合list中元素的顺序。
+	// 8.static void shuffle(List list)将集合中list中元素的随机打乱顺序，常常用来洗牌。
+	// 9.static void sort(List list) 将list集合升序排序。（注意：元素必须是同一种类型）
+	// 10.static void sort(List list, Comparator c)根据指定的比较器c对指定的集合list进行排序。（注意：元素必须是同一种类型）
+	// 11.static void swap(List list, int i, int j)交换集合list中下标i和下标j的元素位置。
+	// 12.static List synchronizedList(List list)将list对象转换为线程安全的。
+	// 13.static Map<K,V> synchronizedMap(Map<K,V> m)将map对象转换为线程安全的。
+	// 14.static Set<T> synchronizedSet(Set s)将set对象转换为线程安全的。
+
+
+
+
+
+

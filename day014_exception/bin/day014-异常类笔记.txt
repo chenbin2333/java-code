@@ -1,0 +1,274 @@
+day014异常类：
+
+4. 数学相关类Math/BigInteger/BigDecimal	（掌握BigDecimal）	
+	4.1 Math:数学工具类，有很多数学相关运算的方法。如基本指数，对数，平方根和三角函数。 
+		直接调用该类中的常量和方法即可
+		
+ 		类名.常量名：
+ 				static double E 
+				static double PI  
+ 		//调用常量：类名.常量名
+		System.out.println(Math.PI);
+		System.out.println(Math.E);
+		
+		//调用方法：
+		//调用方法（都是static修饰的）
+		//static double abs(double a)返回值为 double绝对值。  
+		//static double ceil(double a)  天花板，向上取整
+		System.out.println(Math.ceil(3.14));//4.0
+		
+		//static double floor(double a)  地板，向下取整
+		System.out.println(Math.floor(3.14));//3.0
+		
+		//static long/int round(double a)  四舍五入
+		System.out.println(Math.round(3.45));//4
+		
+		//static double max(double a, double b)返回两个 double值中的较大值。  
+		//static double min(double a, double b)返回两个 double值中的较小值。  		
+ 		
+	4.2 BigInteger:比long类型精度更高的整数类型,创建对象用String类型参数的构造方法。
+		BigInteger big = new BigInteger("1111111111111");
+		
+	4.3 BigDecimal:比double类型精度更高的类型，一般使用在金融相关行业。例如，银行、保险公司等【掌握】
+		建议大家用String类型的有参构造，因为double类型参数会有精度丢失问题。
+			注意除法的溢出问题。用重载方法
+			BigDecimal big = new BigDecimal("1111111111111.0000");
+			
+6. System类（重点掌握两个方法）
+	1.System.arraycopy(Object[] src, int srcPos, Object[] dest, int destPos, int length)(掌握)
+		数组复制方法
+		src: 源数组
+		srcPos:源数组开始复制的下标
+		dest: 目标数组
+		destPos:目标数组开始复制下标
+		length: 复制的元素个数
+		从源数组src中的srcPos下标处，开始复制 length个元素到目标数组dest中，从destPos下标开始粘贴
+		注意不要超过两个数组的长度限制,并且这个方法可以对同一个数组进行复制
+		
+	2.System.currentTimeMillis()（掌握）返回当前long类型时间毫秒数。主要是用了测试程序运行时间
+	
+	==================下面作为了解=============================
+	3. System.exit(int status)结束当前JVM。	status - 退出状态。 非零状态码表示异常终止
+	4. System.gc() 调用垃圾（堆中匿名对象）回收器	谨慎使用，
+		因为业内有句话叫：stop all the world 所有的时间都在处理垃圾
+	
+
+	
+1. 正则表达式：Regex(Regular Expression)
+ *		1.1. 概念：就是字符串匹配的机制
+ *			跨平台，Java/JS/c++/sql
+ 
+ *		1.2. 作用：
+ *			校验做一些要求判断，例如：账号规范、密码强度、身份证、电话号码/邮箱。。。。等
+ *			
+ *		1.3. 语法：
+ 			取值范围：
+			[AbZ] 匹配26个大写字母中的一个
+			[a-z] 匹配26个小写字母中的一个
+			[0-9] 匹配0至9数字中的一个
+			[A-Za-z0-9] 匹配26个大写字母、26个小写字母和0至9数字中的一个
+				
+			
+			\d等价于[0-9]	匹配一个任意数字
+			\D等价于[^0-9]	匹配一个任意非数字字符		 ^是除此之外
+			\w等价于[A-Za-z_0-9]匹配任意一个字符		 ^是除此之外
+			\W等价于[^A-Za-z_0-9]。
+			
+			
+			取值的个数：
+			?等价于匹配长度{0, 1} 0<= 个数 <=1
+			*等价于匹配长度{0, } 个数  >= 0
+			+等价于匹配长度{1,} 个数 	>= 1
+			{n, m} 匹配长度在n到m之间 n<= 个数 <=m
+			{n, } 匹配长度大于等于n   n<= 个数
+			{n} 匹配n个 
+			
+			常用运算符与表达式:
+			^ 表示正则表达式开始（可写可不写），匹配输入字符串开始的位置。如果是在取值范围[]中使用，则表示除了...
+			$ 表示正则表达式结尾（可写可不写），匹配输入字符串结尾的位置
+			如果正则表达式使用了^$表示全匹配，包括顺序
+			加^$的话就代表把整个要匹配的字符串当成一个整体做一次匹配，
+				而不加则一个字符串可以匹配多次，只能代表这个字符串中有符合条件的并不代表改字符串符合条件
+			
+			[a-z] 可以用来匹配任意位置上的小写字母: "...a..."
+			^[a-z] 只能匹配以小写字母为行首的行: "a..."
+			[a-z]$ 只能匹配以小写字母为行尾的行: "...a"
+			^[a-z]$ 应该只能匹配只有一个小写字母的行: "a"
+			
+			
+			() 域段（一组数据，就是一个整体）
+			[] 包含,默认是一个字符长度
+			[^] 不包含,默认是一个字符长度
+			
+			. 任何单个字符(\. 字符点)
+			| 或
+			& 并且
+			\ 转义
+			
+			^[0-9]+(.[0-9]{1,2})?$ :表示匹配 0-9的数字1个到任一个 和（ . 和 0-9 一个或者两个）括号中可以有0或者1个
+ *
+ *	
+ *		1.4. 以后用到了，就直接百度，如果说网上没有，再回来看api，学习语法
+ *
+ *		1.5. 主要使用在String相关方法中：
+ *			1. matches() 判断当前String对象是否满足正则表达式
+ *			2. split()		当前String对象按照正则表达式拆分
+ *			3. replaceAll()	当前String对象将满足正则表达式的部分全部替换为指定的字符串
+ *			4. replaceFirst() 当前String对象将满足正则表达式第一个出现的部分替换为指定的字符串
+ *
+ *		1.6. 参见Matcher 和 Pattern类，加强正则表达式(扩展)
+				
+3. 日期和时间相关类：（掌握）
+	3.1 Date类：
+ *		适用于特定的某一刻时间的场景，如：订单时间、入职时间等
+ *		日期相关类，指具体某一刻的时间
+ *		1. 构造方法
+ *			1. Date() 创建的就是当前这一刻时间的对象
+ *			2. Date(long time) 	将指定毫秒数的时间转换为对应的日期时间
+ 				距离1970年1月1日 0时0分0秒
+ *			
+ *		2. 普通方法
+ *			1. long getTime()将当前Date对象转换为long类型的时间毫秒数
+ *			2. void setTime(long time)将long类型时间毫秒数转换为对应的Date对象
+ *			3. before(Date date)判断是否在指定日期之前
+ *			4. after(Date date)判断是否在指定日期之后	
+				
+	3.2 SimpleDateFormat类，用来进行时间格式化的。
+	
+		Format
+ *	    	|
+ *	   	DateFormat
+ *		   |				
+ *		 SimpleDateFormat类：用来将Date和String进行格式转换的
+ *						直接打印日期显示的格式不符合地区习惯，需要转换格式
+ *		
+ *		构造方法：
+ *			SimpleDateFormat() 
+			SimpleDateFormat(String pattern)  创建一个含有指定字符串模板的SimpleDateFormat对象
+ *
+		1. 将Date转换为String类型【根据模板转换，模板是根据不同地区习惯设置】
+ *			步骤：
+ *				1. 创建对象
+ *					SimpleDateFormat sdf = new SimpleDateFormat(String 模板);
+ *				2. 将Date转换为String
+ *					sdf.format(date);
+ *
+ *		2. 将String转换为Date类型
+ *			步骤：
+ *				1. 创建对象
+ *					SimpleDateFormat sdf = new SimpleDateFormat(String 模板);
+ *				2. 将String转换为Date
+ *					sdf.parse(str);
+ *		
+	 *			补充：
+ *					sdf.applyPattern(String pattern);可以将SimpleDateFormat重新设置模板格式
+			
+	3.3 Calendar日历类。主要用来操作一段时间和进行时间加减等场景			
+		使用：
+ *		构造方法：（protected）
+ *			 Calendar rightNow = Calendar.getInstance();获取一个对象
+ *
+ *		常用方法：
+ * 			1.int get(int field)  	获取某一个字段（当前Calendar常量）的时间
+ *			2.abstract void add(int field, int amount)  添加时间操作
+	 * 			field:是Calendar中的常量
+	 * 			月份从：0-11	
+	 * 			如果月份超过11，则进年，如果日期超过所在月份的最大或者最小一天，则进月或者退月
+	 * 		3.void set(int field, int value)根据当前Calendar常量设置时间   
+	 * 		4.Date getTime()   将Calendar对象转换为Date类型
+	 * 		5.void setTime(Date date)  将Date转换为Calendar
+	 * 		6.boolean after(Object when)  
+	 * 		7.boolean before(Object when)  
+	 
+	时间、日历、时间格式化类使用场景：【掌握】
+		Calendar抽象类，日历类。主要是用来操作日期的，例如，加减日期，比较日期，判断一段时间等
+ 		Date类：适用于具体某一刻时间，一般用在例如，订单时间、用户注册时间等
+ 		SimpleDateFormat类：将日期和字符串进行格式转换		
+
+				 
+4. 异常类
+	之前见过的一次都有哪些？
+ *
+ *		1. 概念【了解】：就是一种不正常的状态而已。可以简单的认为就是一个标志。告诉程序员这是发生了什么问题，应该怎么解决。
+ *			例如：猪肉，看到有一个紫色的章。 
+ *
+ *		2. 异常分类：【了解】
+ *			Throwable 所有错误和异常的基类 【了解】
+ *				|
+ *				|----Error 错误：我们通过Java代码处理不了的。例如：内存溢出OutOfMemory、网络掉线了
+ *				|----Exception 异常 ：我们通过Java代码可以处理的
+ *						|---RuntimeException 运行时异常（就是只有在运行的时候，才能出现）
+ *									|
+ *									|----1. NullPointerException
+ *									|----2. ArrayIndexOutOfBoundsException
+ *									|----3. ClassCastException【多态】
+ *									|----4. NumberFormatException
+ *									|----5. IllegalArgumentException 非法参数异常
+ *									|----6. StringIndexOutOfBoundsException
+ *						|
+ *						|---非运行时异常（除了RuntimeException之外的所有的异常都是非运行时异常）主要处理的是 非运行时异常
+ 							在编译期就必须强制程序员处理的异常。
+ *
+ *		3. Java底层异常的运行和处理的机制：【了解】
+ *			发生异常后，程序先查看是否在该异常发生的地方有处理异常的语法结构，如果有，则会处理异常，然后处理完异常后，
+ *			正常向下面执行代码。如果没有，则会向上一级调用者抛出该异常，然后继续查看上一级调用者处，是否有处理异常的结构，
+ *			如果有就处理，然后继续向下执行，如果没有，会继续向上一级调用者抛出异常，直到抛出到JVM为止。JVM处理异常的方式
+ *			是先打印异常信息到控制台，然后退出JVM。
+ *		
+ 		4. 自定义异常： 命名XxxException （掌握）
+			设计步骤：	
+				1. 设计一个XxxException 去继承 Exception 类
+				2. 通过eclipse工具生成一个随机的序列化号 serialVersionUID（选第2个）
+					将鼠标移动到类名上，在弹框中选择第二个
+				3. 通过eclipse工具生成一个无参构造和一个String类型参数的构造
+					alt+shift+s弹框选择通过SuperClass的方式生成，勾选无参构造和String参数构造即可
+					
+			使用方式：
+				在条件判断语句中，满足条件后，创建一个自定义异常对象，然后
+	 *			通过throw关键字抛出,并且同时在方法上也要通过throws
+	 *			用在（）后｛｝前抛出，多个异常逗号隔开，顺序无所谓。	
+ 
+ *		5. 处理异常的方式：【重点】只需要会选择就可以了，主要是eclipse工具
+ *			方式一：try catch	【背锅式】
+ *				try {
+ *					异常可能发生的代码
+ *				} catch (可能的异常类1 e) {// 当发生异常的时候，JVM会自动根据异常类型，创建一个异常对象，将异常信息保存到对象e中。异常信息通过继承Throwable类中的方法获取
+ *					处理异常的操作：
+ *					1. 打印异常的信息到控制台；
+						// 处理方式1 ：获取异常原因    一般处理后给前台页面返回，给用户提示问题原因 
+						String message = e.getMessage();
+						System.out.println(message);
+						// 2. 处理方式2：打印堆栈跟踪日志  推荐 给程序员看的，帮助程序员定位错误的位置，处理异常
+						e.printStackTrace();	
+						
+						// 3. 处理方式3 ：异常类型和异常原因【了解】
+						String str = e.toString();
+						System.out.println(str);
+						
+					2. 可以把异常信息保存到一个文件中，可以持久的存储起来；(IO后才能用)
+					 	因为实际项目有可能有很多异常打印到控制台，不能随时关注，这时就需要将日志保存
+						
+ *				} catch (可能的异常类2 e){// 注意：必须子类异常在上面，父类异常在下面。如果异常没有关系，顺序无所谓。
+ *					处理方式同上
+ *				} .....
+ *				finally {
+ *					不管上面的上面的执行情况是怎样的，finally代码永远都会执行
+ *					一般只是释放资源，不写业务逻辑代码。
+ *					例如，在finally中关流、释放锁等	
+ *				}			
+ *			
+ *				try catch处理方式注意事项：
+ *					1. 子类异常在上面，父类异常在下面，平级异常顺序无所谓
+ *					2. 不要用一个最大的异常处理，尽量细化异常处理方式，因为不同的异常处理的方式是不同的。
+ *
+			方式二：	向外在抛出给调用者，就是谁调用谁处理。为了给调用者（其他程序员）一个提示 【甩锅式】
+					语法：
+						当满足异常抛出条件的时候， 创建一个异常对象，通过关键字throw抛出，
+						同时该方法也需要通过throws关键字,用在()后{}前，多个异常逗号隔开，顺序无所谓。
+ *		
+ *		不知道什么时候try什么时候向外抛出？
+ *			不用管那么多，现在只有eclipse工具提示红色错误都要try
+		
+	
+				
+				

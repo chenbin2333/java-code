@@ -1,0 +1,84 @@
+day016 数据结构的底层原理 笔记、
+
+1. 数据结构：就是保存数据的一种方式
+2. 根据保存数据的方式不同，分为不同的数据结构：
+3. 为什么我们要学习数据结构？
+	就是为了在特定的使用场景下选择更好的选择数据结构来提高效率。
+	
+4. 定时器类Timer【掌握】
+	1. 作用：闹钟、定时上传功能、闲时上传、断点续传
+	2. 使用：
+		1. 创建对象
+ 			Timer() 创建一个新的定时器对象
+ 			Timer(String name) 创建一个新的定时器，其相关线程具有指定的名称
+	
+		2. 常用方法
+			1.void schedule(TimerTask task, Date time) 在指定的时间执行指定的任务  
+			2.void schedule(TimerTask task, long delay) 
+				在指定的毫秒数之后执行指定的任务。  
+			3.void schedule(TimerTask task, Date firstTime, long period) 
+				从指定 的时间开始 ，间隔指定的毫秒数重复的执行
+			4.void schedule(TimerTask task, long delay, long period) 
+				从指定 的时间延迟后 ，间隔指定的毫秒数重复的执行
+				
+			5.void scheduleAtFixedRate(TimerTask task, Date firstTime, long period) 
+				从指定 的时间开始 ，间隔指定的毫秒数重复的执行 (如果当期覅人Time是过去时间，会一次性将所有缺少的任务执行完毕)
+			6.void scheduleAtFixedRate(TimerTask task, long delay, long period) 
+				从指定 的时间延迟后 ，间隔指定的毫秒数重复的执行(不能执行过去任务，否则会抛出异常，delay不能为负数)
+			7. void cancel() 终止当前任务。
+	
+5. 数据结构底层
+	保存数据方式：	int[] arr = new int[2];
+		1. 变量：保存一个
+		2. 数组：保存一组相同类型的
+		
+		数组中有几个方法？
+ *			1. 需求1：
+ *				1. 请设计一个类，可以装多个不同类型的数据,初始长度是10个
+ *					底层是基于数组，因为是可以装不同数据类型的数据，所以是Object数组
+ *					int/byte/short /boolean....
+ *					Object[] value = new Object[10];
+ *					value[0] = 1;//int 的1装好为对应的包装类Integer
+ *
+ *				2. 可以记录当前数据的个数 int size()
+ *					
+ *				3. 可以添加任意类型的数据 void add(Object obj)
+ *						version2 自动扩容
+ *
+ *				4. 可以打印当前数据结构的对象，格式如下：[值1，值2.。。。。]
+ *
+ *				5. 查询指定下标的元素  Object searchByIndex(int index)
+ *				6. 查询指定的元素第一次出现的位置  int searchByElement(Object ele);
+ *
+ *				7. 修改指定下标处的元素  void updateByIndex(int index,Object obj)
+ *				8. 删除指定下标处的元素，返回删除的元素  	Object deleteByIndex(int index)
+ *				9. 删除的首次出现的指定元素     void deleteByElement(Object ele)
+ *				10.插入指定下标处一个指定元素 void insertByIndex(int index,Object obj)
+ *					
+ *				11.将对象中所有元素清空 void clear();
+ *				12.可以创建指定长度的ArrayList对象
+ *				13.创建一个默认长度是10的ArrayList对象
+ *				14.创建一个默认长度是10，且有指定元素的ArrayList对象
+
+	基于变量（对象）：可以保存多个不同类型的数据
+ *			
+ *				1. 可以任意添加任意类型的数据 void add(Object obj)
+ *				2. 可以记录当前数据的个数 int size()
+ *				3. 可以打印当前数据结构的对象 toString()，格式如下：[值1，值2.。。。。]
+ *
+ *				根据下标查询当前的节点对象 Node searchNodeByIndex(int index)(重要方法)
+ *				
+ *				4. 查询指定下标的元素  Object searchByIndex(int index)
+ *				5. 查询指定的元素第一次出现的位置  int searchByElement(Object ele);
+ *
+ *				6. 修改指定下标处的元素  void updateByIndex(int index,Object obj)
+ *				7. 删除指定下标处的元素，返回删除的元素  	Object deleteByIndex(int index)
+ *				8. 删除的首次出现的指定元素     void deleteByElement(Object ele)
+ *				9. 插入指定下标处一个指定元素 void insertByIndex(int index,Object obj)
+ *					
+ *				10.将对象中所有元素清空 void clear();
+ *				11.创建对象，可以直接传入一个参数初始化
+
+总结：基于数组的增删插慢，查改快。ArrayList适用于查改操作多的
+LinkedList基于变量的增删插快，查改慢。LinkedList适用于增删插操作多的
+

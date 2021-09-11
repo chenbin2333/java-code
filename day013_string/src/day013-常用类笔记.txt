@@ -1,0 +1,194 @@
+day013-常用类
+
+常用类学习方法：
+	前面的知识点都是语法性的，好记容易记，从今天开始每天知识点很多，很杂，记不住、
+	是正常现象。从今天开始的学习方法是，通过做题、综合案例和项目加强在具体场景下的使用记忆。
+	
+	设置字符集：以后开发前端如：HTML、css、js 和后台java以及数据库都要设置为UTF-8
+			1.鼠标移到项目上，右键，properties=>选择具体字符集
+			2.windows=>pererfrences=>general=>workspace=>选择具体字符集UTF-8
+			最后不要忘记，apply => Ok
+	
+1. eclipse快捷键：(做成桌面背景，多用)
+	快捷键：
+	alt+/   					代码提示
+
+	ctrl+alt+方向键上                          向上复制【快捷键冲突】
+	ctrl+alt+方向键下				向下复制【快捷键冲突】
+
+	ctrl+/;						单行注释/取消注释	
+	ctrl+shift+/				多行注释	
+	ctrl+shift+\				多行取消注释
+	alt+shift+j					文档注释
+
+	ctrl+shift+o				导包或者删除多余的包	
+
+	ctrl+d						 删除行	
+	
+	ctrl+shift+回车				 向上插入一行	
+	shift+回车					 向下插入一行
+
+	alt+方向键上					代码向上移动	
+	alt+方向键下					代码向下移动
+
+	按住ctrl键，然后鼠标光标移动到指定类或者方法，点击它	          跟进代码
+	alt+方向键左					跟踪上一个编辑处
+	alt+方向键右					跟踪下一个编辑处
+	
+	ctrl+shift+f				代码格式化【不建议用】
+
+	alt+shift+s Generate Constructor using Field		构造方法
+	alt+shift+s Generate Getters And Setters			getter/setter
+	alt+shift+s Generate Getters And Setters			toString
+	alt+shift+s Generate Getters And Setters			hashCode/equals
+	
+	ctrl+shift+t				查询jdk自带的类和自定义的类
+	ctrl+shift+R				查询自定义的类
+	ctrl+o						快速查看方法
+	
+	ctrl+shift+连续两个L			重新设置快捷键	
+	ctrl+f 						查找指定单词
+	ctrl + shift + x 			将选中的全大写
+	ctrl + shift + y 			将选中的全小写
+	
+	alt + shift + a + 鼠标位置	批量操作
+	alt + shift + m 			封装选中代码为一个方法
+		
+	设置字符集：以后开发前端如：HTML、css、js 和后台java以及数据库都要设置为UTF-8
+			1.鼠标移到项目上，右键，properties=>选择具体字符集
+			2.windows=>pererfrences=>general=>workspace=>选择具体字符集
+			3.以后用到再说
+
+	设置快捷键：
+			1.ctrl+shift+连续两个L		 重新设置快捷键打开设置窗口
+			2.输入要设置的快捷键 => unbind commond => binding设置新的快捷键 => apply =>ok
+		
+	设置自定义代码提示功能：
+			windows=>pererfrences=>java=>editor=>templates
+			1.根据需要或者new创建新的代码提示
+				name: 输入提示的代码
+				discription: 说明该代码作用或用途
+				pattern: 具体生成的代码
+			2.或者edit修改
+			
+2. 常用类学习方式：就是用别人类中的实例变量、类变量、实例方法、类方法 、构造方法【重点】
+	使用别的类的方式：
+		1. 实例变量、实例方法 => 需要创建对象 => 构造方法 => 创建好对象调用即可
+		2. 类变量、类方法 =>  直接类名. 调用即可
+				
+3. 包装类：(掌握常用方法)
+		基本类型		包装类		父类			父类
+		byte		Byte		Number抽象	Object
+		short		Short		Number抽象	Object
+		int			Integer		Number抽象	Object
+		long		Long		Number抽象	Object
+		float		Float		Number抽象	Object
+		double 		Double		Number抽象	Object
+		char		Character	Object
+		boolean		Boolean		Object
+		自动装箱：将基本类型隐式转换为对应的包装类就是自动装箱
+ 		自动拆箱：将包装类转换为对应的基本类型就是自动拆箱。
+ 		注意：自动拆箱和装箱都要类型对应
+ 		
+ 		享元模式：
+	 		必须是使用自动装箱方式，才用享元模式
+			Byte/Short/Integer/Long 都在类的内部通过静态内部类缓存了 -128~127之间的数字，
+	 		在此范围内并不会创建对象，都是用的静态缓存区的对象地址		
+			
+4. 数学相关类Math/BigInteger/BigDecimal	（掌握BigDecimal）	
+	4.1 Math:数学工具类，有很多数学相关运算的方法。如基本指数，对数，平方根和三角函数。 
+		直接调用该类中的常量和方法即可
+		
+ 		类名.常量名：
+ 				static double E 
+				static double PI  
+ 		//调用常量：类名.常量名
+		System.out.println(Math.PI);
+		System.out.println(Math.E);
+		
+		//调用方法：
+		//调用方法（都是static修饰的）
+		//static double abs(double a)返回值为 double绝对值。  
+		//static double ceil(double a)  天花板，向上取整
+		System.out.println(Math.ceil(3.14));//4.0
+		
+		//static double floor(double a)  地板，向下取整
+		System.out.println(Math.floor(3.14));//3.0
+		
+		//static long/int round(double a)  四舍五入
+		System.out.println(Math.round(3.45));//4
+		
+		//static double max(double a, double b)返回两个 double值中的较大值。  
+		//static double min(double a, double b)返回两个 double值中的较小值。  		
+ 		
+	4.2 BigInteger:比long类型精度更高的整数类型,创建对象用String类型参数的构造方法。
+	
+	4.3 BigDecimal:比double类型精度更高的类型，一般使用在金融相关行业。例如，银行、保险公司等【掌握】
+		建议大家用String类型的有参构造
+			因为double类型会有精度丢失问题。
+			注意除法的溢出问题。用重载方法
+			
+6. System类（重点掌握两个方法）
+	1.System.arraycopy(Object[] src, int srcPos, Object[]  dest, int destPos, int length)(掌握)
+		数组复制方法
+		src: 源数组
+		srcPos:源数组开始复制的下标
+		dest: 目标数组
+		destPos:目标数组开始复制下标
+		length: 复制的元素个数
+		从源数组src中的srcPos下标处，开始复制 length个元素到目标数组dest中，从destPos下标开始粘贴
+		注意不要超过两个数组的长度限制
+		
+	2.System.currentTimeMillis()（掌握）返回当前时间毫秒数。主要是用了测试程序运行时间
+	
+	==================下面作为了解=============================
+	3. System.exit(int status)结束当前JVM。	status - 退出状态。 非零状态码表示异常终止
+	4. System.gc() 调用垃圾（堆中匿名对象）回收器	谨慎使用，
+		因为业内有句话叫：stop all the world 所有的时间都在处理垃圾
+	
+7. 字符串相关类：String、StringBuffer、StringBuilder	【重重点】
+	（常用方法重点掌握）
+	字符串相关的类：
+ *		1. String 字符串类，底层是基于char[], 一旦创建长度就固定不变了,适用于字符串不经常增删改的操作的场景。父接口：CharSequence
+ *			该接口的实现类：String、StringBuffer、StringBuilder
+ *			String str = "abc";
+ *			str += "d";// 会创建新对象
+ *		
+ *		2. 将其他类型转换为String类型的方式效率问题：（重点）
+ *			toString() > String.valueOf(Object obj) > + 
+ *			因为+号，底层先将字符串对象转换为StringBuilder对象，然后调用StringBuilder对象的append追加字符串方法，再调用toString方法
+ *			转换为String对象
+ *
+ *		3. 拼接字符串效率最高的方式：	（重点）
+ * 			StringBuilder.append() > StringBuffer.append() > +
+ *
+ *			如果经常操作字符串用StringBuilder和StringBuffer，如果是单线程或者多线程且不要求线程安全问题，用StringBuilder，
+ * 			如果是多线程且是线程安全要求用StringBuffer
+ 
+ *		4.常量池：提高效率(了解)
+ * 
+ * 			放字符串常量的地方，JDK8后是放在堆中
+ *
+	 *		当创建字符串对象是字面量(直接是="")的时候，会优先从常量池中查找，是否有该字符串对象，如果有，则会直接将常量池中的地址赋值给该String对象，
+	 *		如果没有，则会在常量池创建对象，然后将对象常量池的地址给String对象保存
+	 *
+	 *		当创建字符串对象用new创建，会优先从常量池中查找，是否有该字符串对象，如果有，则会直接将常量池中的地址赋值给该String对象在堆中的地址，
+	 *		如果没有，则会在常量池创建对象，然后将对象常量池的地址给String对象在堆中保存
+	 *		
+	 	5. String、StringBuffer、StringBuilder使用场景（重点）
+	 	String 字符串类，底层是基于char[], 一旦创建长度就固定不变了,适用于字符串不经常增删改的操作的场景。
+   
+	 	StringBuilder: 基于可变char[]，默认长度是16个，适用于频繁操作（增删改插）字符串的场景，
+	 	该类是线程不安全的。字符串操作效率高
+	 
+	 	StringBuffer:基于可变的char[]，默认长度是16个，适用于频繁操作（增删改插）字符串的场景，
+	 	该类是线程安全的。字符串操作效率低
+		
+		
+	 	如果是单线程和多线程没有线程安全要求，用StringBuilder，因为效率高。
+	 	如果是多线程有线程安全要求，用StringBuffer，因为线程安全
+	 	如果不经常操作字符串用 String节省空间【不经常替换、拼接、删除、插入用String】
+	 	
+	 	StringBuffer和StringBuilder扩容机制：当要添加的字符串大于 > 当前字符数组的长度的时候
+	 	扩容，扩容是： 原来长度*2+2 的方式扩容
+	

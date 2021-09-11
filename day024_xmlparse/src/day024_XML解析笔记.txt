@@ -1,0 +1,212 @@
+day024_XML解析笔记
+
+1. XML
+	1. XML概念：XML(eXtensible Markup Language)，是一种可扩展的标记语言
+	2. 作用：
+			XML是跨平台和跨语言的
+			不同的语言都支持XML解析（将XML转换为对应语言中的数据）
+		1. 基于ip协议数据传输（现在已经被JSON取代），几乎不用了
+		2. 配置文件（最常用的使用场景）
+			例如：Spring、SpringMVC、MyBatis、Tomcat
+			
+			扩展配置文件分类：
+				1. .properties【一般作为数据库连接配置文件】
+				2. .xml
+				3. .yml SpringBoot配置文件
+				4. .ini(MySQL、Eclipse)
+				
+	3. XML语法：	（掌握）
+	
+		<?xml version="1.0" encoding="UTF-8"?>
+			<!--注释快捷键：ctrl + shift + / -->
+			
+			<!-- 第一行，必须有。定义XML的版本和字符集 -->
+			<!-- XML中的注释 -->
+			XML的语法格式:
+		第一行用了定义xml文件的，写版本号和字符集
+		1.注释不能放到第一行 
+			1.必需有声明，声明必需在第一行。
+	       	2.文档声明的字符编码必需和文档本身的编码一致
+		2.只能有一个根标签；表示不能再有其他平级标签
+		3.标签不能交叉嵌套使用(标签名字随便定义)
+			1. 双标签 : <双标签></双标签>一般是有下一级的
+			2. 单标签 ：<单标签/> 如果没有下一级，就可以用单标签
+		
+		4.有开始有结束
+		5.不数字开头，只能以字母或下划线开头;
+		6.严格区分大小写	
+		7.不管是单标签还是双标签，都可以在标签中声明属性，如果是双标签属性必须写在头标签中。一个标签不能有两个相同属性（属性名随便定义）
+			属性直接写在头标签内，格式：属性名="属性值"
+		8.特殊符号需要转义 或者可以放到CDATA区 <![CDATA[这里写特殊符号]]>	html特殊符号，转义符号
+		9.编码格式统一：
+			1.开发环境：项目环境、系统环境	
+			2.当前文件内encoding字符集
+		
+		10.不能以xml（或者XML，Xml等）开头W3C保留日后使用;
+		 例如：最好不要使用 <xml:xx></xml: xx>W3C保留以后在使用
+		11.名称字符之间不能有空格或者制表符; 例如<四川   省>
+		12.名称字符之间不能使用冒号;<xml:xx></xml: xx>
+		
+		注意：
+			1.Xml中空格和换行都表示数据，严格区分大小写
+				
+	4. XML约束（除了按照XML语法以外，还有遵守其他规则）（了解）
+		1. 概念：就是限制一个XML文件中标签和属性等的使用，只能按照某种规则书写
+				便于其他程序员学习,达成统一的共识。
+		2. 作用：
+			1. 代码校验
+			2. 代码提示
+			3. 利于达成共识形成规范
+			
+		3. 约束分类：
+			1. DTD约束：Document Type Definition文档类型定义	
+			例如：
+				<!ELEMENT contacts (linkman+)>
+				<!ELEMENT linkman (name,email,address,group)>
+				<!ELEMENT name (#PCDATA)>
+				<!ELEMENT email (#PCDATA)>
+				<!ELEMENT address (#PCDATA)>
+				<!ELEMENT group (#PCDATA)>
+				
+			2. schema约束：xml Schema Definition xsd文件	
+			例如：
+			<?xml version="1.0" encoding="UTF-8" ?>
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+				targetNamespace="http://itsource.cn" elementFormDefault="qualified">
+				<xs:element name="contacts">
+					<xs:complexType>
+						<xs:sequence maxOccurs='unbounded'>
+							<xs:element name="linkman">
+								<xs:complexType>
+								            <xs:sequence>
+									<xs:element name='name' type='xs:string' />
+									<xs:element name='email' type='xs:string' />
+									<xs:element name='address' type='xs:string' />
+									<xs:element name='group' type='xs:string' />
+								            </xs:sequence>
+									<xs:attribute name="id" type="xs:long" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>			
+				
+ 5. XML解析（最重要）		
+ 		【将xml文件中的数据取出来的过程就是xml解析】
+		DOM: 文档对象模型
+		将一个XML(html)文档 的每一个元素解析成java中的一个一个的对象
+		D	Document	文档(XML文档)   ： 磁盘上面的xml文件
+		O	Object	对象(Java对象)    ： 把xml文件封装成Java对象
+		M	Model	模型
+		
+		xml解析方式：https://www.cnblogs.com/longqingyang/p/5577947.html【扩展】
+		
+		解析过程中用到的类：
+			Document
+			
+			Node(节点)
+			Element (元素)
+			Attribute(属性) 
+			
+		dom4j解析：
+			支持xpath解析，就可以可以直接输入一个路径查找：
+			由于DOM4J在解析XML时只能一层一层解析，所以当XML文件层数过多时使用会很不方便，
+			结合XPATH就可以直接获取到某个元素
+
+		使用dom4j支持xpath的操作的几种主要形式
+			https://blog.csdn.net/sidihuo/article/details/41310727
+		   　　第一种形式
+		        　　　　/a/b/c： 表示一层一层的，a下面 b下面的c
+		    　  第二种形式
+		       　　　　 //b： 表示和这个名称相同，表示只要名称是b，都得到
+		         第三种形式
+		        　　　　/* : 所有元素
+		         第四种形式
+		       　　　　a[1]：　表示第一个a元素
+		        　  　　a[last()]：表示最后一个a元素
+		         第五种形式
+		        　　　　//a[@id]： 表示只要a元素上面有id属性，都得到
+		         第六种形式
+		        　　　　//自定义命名空间:a[@id='b1'] 表示元素名称是a,在a上面有id属性，并且id的属性值是b1【如果使用约束文件，则写自定义命名空间】
+		        　　　　//a[@id='b1'] 表示元素名称是a,在a上面有id属性，并且id的属性值是b1【如果不使用约束文件】
+		
+				如果查询id属性值是b1的a元素下一级元素d，则可以这样写：
+					//自定义命名空间:a[@id='b1']/自定义命名空间:d 表示元素名称是a,在a上面有id属性，并且id的属性值是b1【使用了约束文件，且属性值是：qualified】
+					//a[@id='b1']/d 表示元素名称是a,在a上面有id属性，并且id的属性值是b1【如果不使用约束文件】
+		
+			使用dom4j支持xpath具体操作
+		         默认的情况下，dom4j不支持xpath，如果想要在dom4j里面是有xpath，
+		         第一步需要，引入支持xpath的jar包，如下：
+				jaxen-1.1-beta-6.jar
+		       
+		         在dom4j里面提供了两个方法，用来支持xpath
+		       　　　　selectNodes("xpath表达式")，获取多个节点
+		　　　　　　selectSingleNode("xpath表达式")，获取一个节点
+	解析XML步骤：
+			1. 在项目下创建一个lib文件夹folder
+			2. 复制dom4j的jar包到lib文件夹中
+			3. 选中jar右键buildpath
+			4. 在测试类中使用dom4j解析XML。（今天开始学习别人的api）
+			
+	dom4j中使用到的方法：
+		1.创建SaxReader对象
+			SAXReader reader = new SAXReader();
+		
+		*******************************这是使用约束的用法************************************	
+		2.设置命名空间	（如果XML使用约束且属性elementFormDefault值是：qualified，则必须要设置）【简化自定义命名空间使用过程】
+			HashMap<String, String> hashMap = new HashMap<String, String>();
+			map.put("myKey", "自定义命名空间名");// key的名字自己取
+        	reader.getDocumentFactory().setXPathNamespaceURIs(map);	
+		*******************************************************************	
+		
+		3. SAXReader对象调用read方法，将当前XML文件，转换为Document对象
+			获取字节流InputStream
+			用缓冲流包装一下InputStream
+			Document document = reader.read(缓冲流);
+			
+		4. 获取根节点
+			root = document.getRootElement();
+			
+		5. 通过父签添加子标签（元素）
+			Element element = root.addElement("标签名");//返回值就是要添加的元素对象
+			
+			给子标签添加值
+			element.setText("标签值");
+			
+		6. 给当前标签添加属性:xxx ，值是：xxx
+			Element attribute = linkman.addAttribute("属性名","值");	
+			
+			通过当前元素获取属性对象
+				element.attribute("属性名");
+				
+			通过属性对象attribute获取属性值
+				attribute.setText("值");
+				
+			通过属性对象attribute获取属性值
+				String 值 = attribute.getText();
+			
+		7. 获取当前元素标签名
+				String name = e.getName();
+				
+			获取当前元素标签值
+				String text = e.getText();
+		
+		8. 获取指定名字的子标签（元素）
+		   	 	root.element(String name);	
+		   	 	
+		9. 获取所有子标签（元素）
+		   	 	root.elements();	
+			
+		10. 删除子元素，必须通过父元素remove(子元素对象)完成	
+				父元素.remove(子元素对象);
+			
+		10.在dom4j里面提供了两个方法，用来支持xpath
+       　　　　	selectNodes("xpath表达式")，获取当前名字的多个节点
+　　　　　　 	selectSingleNode("xpath表达式")，获取一个节点	
+			【注意：】
+				在多层级的xpath使用的语法：//命名空间:a[@id='b1']/命名空间:元素
+			
+		
+6. dom4j解析注意事项：
+	1. 一定注意导包是dom4j下面的类
